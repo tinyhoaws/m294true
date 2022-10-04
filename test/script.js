@@ -2,40 +2,39 @@ const newForm = document.forms["newForm"]
 const getList = document.getElementById("getList")
 getList.addEventListener("click", handleGetList)
 newForm.addEventListener("submit", handleNewToDo)
+const authForm = document.forms["authForm"]
 
-// const formData = new FormData(newForm)
-// const id = Object.fromEntries(formData).idinput
-
+//function to delete + write the list again with all the buttons and their functons
 function renderList(data) {
 
     const list = document.getElementById("list")
     list.replaceChildren()
 
     data.forEach((object) => {
-        const text = " Task: " + object["title"] + " completed: " + object["completed"] + " "
-            // create new elements in DOM
+        //create elements
+        const text = " Task: " + object["title"] + " "
         const newLi = document.createElement("li")
         newLi.setAttribute("id", object["id"])
         newLi.innerText = text
         const deleteButton = document.createElement("button")
-        deleteButton.innerText = "x"
+        deleteButton.innerText = "X"
         const editButton = document.createElement("button")
-        editButton.innerText = "edit"
-
-        // handle click on each delete button
+        editButton.innerText = "Edit"
+            // handle click on each delete button
         deleteButton.onclick = () => {
-            fetch('http://127.0.0.1:3000/task/' + object["id"], {
-                method: 'DELETE',
-            }).then(function() {
-                const data = fetch("http://127.0.0.1:3000/tasks")
-                    .then(function(data) {
-                        return data.json()
-                    })
-                    .then(function(json) {
-                        renderList(json)
-                    })
-            })
-        }
+                fetch('http://127.0.0.1:3000/task/' + object["id"], {
+                    method: 'DELETE',
+                }).then(function() {
+                    const data = fetch("http://127.0.0.1:3000/tasks")
+                        .then(function(data) {
+                            return data.json()
+                        })
+                        .then(function(json) {
+                            renderList(json)
+                        })
+                })
+            }
+            // handle click on each edit button
         editButton.onclick = () => {
             clickid = (newLi.id)
             const editform = document.createElement("form")
@@ -47,8 +46,8 @@ function renderList(data) {
             const save = document.createElement("button")
             save.setAttribute("id", "save" + clickid)
             save.setAttribute("type", "submit" + clickid)
-            save.innerText = "save"
-            if (newLi.childElementCount < 3) {
+            save.innerText = "Save"
+            if (newLi.childElementCount < 4) {
                 newLi.append(editform)
                 editform.append(editor)
                 editform.append(save)
@@ -69,7 +68,6 @@ function renderList(data) {
                     error.innerText = "Error: Title can't be empty"
                     list.append(error)
                 } else {
-                    // editedtext["completed"] = "false"
                     editToDoBackend(editedtext)
                     newEditForm.reset()
                 }
@@ -111,7 +109,6 @@ function handleNewToDo(event) {
         error.innerText = "Error: Title can't be empty"
         list.append(error)
     } else {
-        // turn the formElements into an object we can work with
         todo["completed"] = "false"
         postToDoToBackend(todo)
         newForm.reset()
