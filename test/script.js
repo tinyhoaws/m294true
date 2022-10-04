@@ -15,6 +15,7 @@ function renderList(data) {
         const text = " Task: " + object["title"] + " completed: " + object["completed"] + " "
             // create new elements in DOM
         const newLi = document.createElement("li")
+        newLi.setAttribute("id", object["id"])
         newLi.innerText = text
         const deleteButton = document.createElement("button")
         deleteButton.innerText = "x"
@@ -36,30 +37,63 @@ function renderList(data) {
             })
         }
         editButton.onclick = () => {
-            console.log(newLi.childElementCount)
+            clickid = (newLi.id)
+            const editform = document.createElement("form")
+            editform.setAttribute("id", "editform" + clickid)
+            editform.setAttribute("name", "editform" + clickid)
+            const editor = document.createElement("input")
+            editor.setAttribute("id", "editor" + clickid)
+            editor.setAttribute("name", "title")
+            const save = document.createElement("button")
+            save.setAttribute("id", "save" + clickid)
+            save.setAttribute("type", "submit" + clickid)
+            save.innerText = "save"
             if (newLi.childElementCount < 3) {
-                const editor = document.createElement("input")
-                newLi.append(editor)
-                const save = document.createElement("button")
-                save.innerText = "save"
-                newLi.append(save)
+                newLi.append(editform)
+                editform.append(editor)
+                editform.append(save)
             } else {
-                newLi.removeChild()
+                const badform = document.getElementById("editform" + clickid);
+                newLi.removeChild(badform);
             }
-            /* fetch('http://127.0.0.1:3000/task/' + object["id"], {
-                 method: 'DELETE',
-             }).then(function() {
-                 const data = fetch("http://127.0.0.1:3000/tasks")
-                     .then(function(data) {
-                         return data.json()
-                     })
-                     .then(function(json) {
-                         renderList(json)
-                     })
-             })*/
+            const newEditForm = document.forms["editform" + clickid]
+            newEditForm.addEventListener("submit", handleEditToDo)
+
+            function handleEditToDo(event) {
+                const editFormData = new FormData(newEditForm)
+                const editedtext = Object.fromEntries(editFormData)
+                console.log(editedtext)
+                event.preventDefault()
+                if (editedtext.title == "") {
+                    const error = document.createElement("span")
+                    error.innerText = "Error: Title can't be empty"
+                    list.append(error)
+                } else {
+                    // editedtext["completed"] = "false"
+                    editToDoBackend(editedtext)
+                    newEditForm.reset()
+                }
+            }
         }
 
-        // append elements to list
+        function editToDoBackend(edit) {
+            console.log(edit)
+            fetch('http://127.0.0.1:3000/tasks', {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title: edit.title, id: clickid })
+            }).then(function() {
+                const data = fetch("http://127.0.0.1:3000/tasks")
+                    .then(function(data) {
+                        return data.json()
+                    })
+                    .then(function(json) {
+                        renderList(json)
+                    })
+            })
+        }
         newLi.append(deleteButton)
         newLi.append(editButton)
         list.append(newLi)
@@ -70,6 +104,7 @@ function renderList(data) {
 function handleNewToDo(event) {
     const formData = new FormData(newForm)
     const todo = Object.fromEntries(formData)
+    console.log(todo)
     event.preventDefault()
     if (todo.title == "") {
         const error = document.createElement("span")
@@ -110,4 +145,4 @@ function handleGetList(event) {
         .then(function(json) {
             renderList(json)
         })
-};
+}
