@@ -1,0 +1,35 @@
+Show, Add, Edit, Delete
+
+These tests aim to check all primary functions of the todo list, like adding new todos or editing/deleting existing ones.
+
+Assuming everything works you would open your todolist by clicking on the "Refresh/Show List" Button. You would the then enter the desired text for the 
+desired todo into the topmost input field and press the "Add" button, adding a new todo to the end of your list. To delete on you would press on the button
+with an "X", this would delete the todo. To edit one you would press the "Edit" button next to a todo, which would reveal an input box and a "Save" button,
+clicking the "Edit" button again should hide the input field and "Save" button again. Entering something into the input field and pressing "Save" should alter
+the chosen todo. Trying to save or add a blank todo should display and error and not execute the function.
+
+
+Showing the list of todos
+
+1. Press Refresh/Show list to display your list of todos 
+2. Alternatively adding a new todo should also display them, while adding the new one aswell.
+
+Result: Everything works, including the error if you leave the add field empty.
+
+
+Adding a new todo
+
+1. Enter text into the input field
+2. click "Add"
+3. Enter nothing into the input field 
+4. click "Add"
+
+Result: the first two steps correctly add a new todo, last two correctly display an error while not changing anything.
+
+Logging in
+
+1. enter login details
+2. you are logged in and shown you todo list
+
+Result: Doesn't work as the login function isn't done. 
+

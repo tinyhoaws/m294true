@@ -2,9 +2,13 @@ const newForm = document.forms["newForm"]
 const getList = document.getElementById("getList")
 getList.addEventListener("click", handleGetList)
 newForm.addEventListener("submit", handleNewToDo)
-const authForm = document.forms["authForm"]
 
-//function to delete + write the list again with all the buttons and their functons
+//const authForm = document.forms["authForm"]  
+
+
+
+newForm.addEventListener("submit", handleNewToDo)
+    //function to delete + write the list again with all the buttons and their functons
 function renderList(data) {
 
     const list = document.getElementById("list")
@@ -47,7 +51,7 @@ function renderList(data) {
             save.setAttribute("id", "save" + clickid)
             save.setAttribute("type", "submit" + clickid)
             save.innerText = "Save"
-            if (newLi.childElementCount < 4) {
+            if (newLi.childElementCount < 3) {
                 newLi.append(editform)
                 editform.append(editor)
                 editform.append(save)

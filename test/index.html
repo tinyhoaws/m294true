@@ -11,23 +11,27 @@
 </head>
 
 <body>
-    <div class="authBox">
-        <form name="authForm">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="titleinput">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="titleinput">
-            <button type="submit">Login</button>
-        </form>
+    <div id="container">
+        <div id="authBox">
+            <form name="authForm">
+                <label for="username" class="blacktextow">Username</label>
+                <input type="text" name="username" id="titleinput">
+                <label for="password" class="blacktextow">Password</label>
+                <input type="password" name="password" id="titleinput">
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div id="todobox">
+            <form name="newForm">
+                <label for="title">Todo Title</label>
+                <input type="text" name="title" id="titleinput">
+                <button type="submit">Add</button>
+            </form>
+            <ul id="list">
+            </ul>
+            <button id="getList">Refresh/Show List</button>
+        </div>
     </div>
-    <form name="newForm">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="titleinput">
-        <button type="submit">Add</button>
-    </form>
-    <ul id="list">
-    </ul>
-    <button id="getList">Refresh List</button>
 </body>
 
 
