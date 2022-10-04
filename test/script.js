@@ -35,6 +35,29 @@ function renderList(data) {
                     })
             })
         }
+        editButton.onclick = () => {
+            console.log(newLi.childElementCount)
+            if (newLi.childElementCount < 3) {
+                const editor = document.createElement("input")
+                newLi.append(editor)
+                const save = document.createElement("button")
+                save.innerText = "save"
+                newLi.append(save)
+            } else {
+                newLi.removeChild()
+            }
+            /* fetch('http://127.0.0.1:3000/task/' + object["id"], {
+                 method: 'DELETE',
+             }).then(function() {
+                 const data = fetch("http://127.0.0.1:3000/tasks")
+                     .then(function(data) {
+                         return data.json()
+                     })
+                     .then(function(json) {
+                         renderList(json)
+                     })
+             })*/
+        }
 
         // append elements to list
         newLi.append(deleteButton)
